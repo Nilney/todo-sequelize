@@ -17,7 +17,12 @@ app.use(express.urlencoded({ extended: true }))
 app.use(methodOverride('_method'))
 
 app.get('/', (req, res) => {
-  res.send('project init!')
+  return Todo.findAll({
+    raw: true,
+    nest: true
+  })
+    .then(todos => res.render('index', { todos }))
+    .catch(err => console.log(err))
 })
 
 app.get('/users/login', (req, res) => {
